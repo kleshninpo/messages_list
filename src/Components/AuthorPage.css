@@ -1,0 +1,15 @@
+.author_page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 15px;
+}
+
+.author_page > div {
+  padding: 10px 20px;
+  background-color: aliceblue;
+}
+
+.author_name, .author_birthday {
+  text-align: center;
+}

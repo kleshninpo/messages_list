@@ -1,0 +1,44 @@
+.modal_container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, .7);
+}
+
+.modal {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 500px;
+  height: 400px;
+  padding: 0 30px 30px;
+  background-color: darkgrey;
+}
+
+.close_icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  background-color: lightgray;
+  right: 0;
+  cursor: pointer;
+  transition: all .3s;
+}
+
+.close_icon:hover {
+  color: white;
+  background-color: #000;
+}
+
+.modal textarea {
+  height: 150px;
+}

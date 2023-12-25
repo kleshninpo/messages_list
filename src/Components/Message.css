@@ -1,0 +1,30 @@
+.message_block {
+  border: 1px solid lightgray;
+  border-radius: 3px;
+  padding: 15px 30px;
+  min-width: 300px;
+  max-width: 550px;
+}
+
+.author {
+  display: block;
+  font-size: 22px;
+  margin-bottom: 15px;
+  color: black;
+}
+
+.text {
+  margin-bottom: 10px;
+}
+
+.date {
+  font-size: 12px;
+  text-align: right;
+}
+
+.messages {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}

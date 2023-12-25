@@ -1,0 +1,45 @@
+{
+  "authors": [
+    {
+      "id": 101,
+      "fullName": "George Martin",
+      "birthday": -670808186000
+    },
+    {
+      "id": 102,
+      "fullName": "Stephen King",
+      "birthday": -703123199000
+    },
+    {
+      "id": 103,
+      "fullName": "John Fowles",
+      "birthday": -1375574399000
+    }
+  ],
+  "messages": [
+    {
+      "id": 1,
+      "author": "George Martin",
+      "createdAt": 1703018055,
+      "text": "Once upon a time I wrote a huge book..."
+    },
+    {
+      "id": 2,
+      "author": "Stephen King",
+      "createdAt": 1603018055,
+      "text": "What I'm doing here?"
+    },
+    {
+      "id": 3,
+      "author": "Stephen King",
+      "createdAt": 1613018055,
+      "text": "Siri how can I open Google?"
+    },
+    {
+      "id": 4,
+      "author": "John Fowles",
+      "createdAt": 1702018055,
+      "text": "About my book 'The Magus'..."
+    }
+  ]
+}

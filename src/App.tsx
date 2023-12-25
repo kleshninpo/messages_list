@@ -1,24 +1,45 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from 'react';
+import { MessagesList } from './Components/MessagesList';
+import { Route, Routes } from 'react-router-dom';
+import { AuthorPage } from './Components/AuthorPage';
+import { IMessage } from './types';
 
 function App() {
+  const [isLoading, setIsLoading] = useState(false);
+  const [messages, setMessages] = useState<IMessage[]>([]);
+
+  useEffect(() => {
+    setIsLoading(true);
+    setTimeout(() => {
+      try {
+        fetch('http://localhost:3001/messages')
+          .then((messages) => messages.json())
+          .then((messages) => {
+            setMessages(messages);
+          });
+      } catch (e) {
+        console.error(e);
+      } finally {
+        setIsLoading(false);
+      }
+    }, 500);
+  }, []);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <MessagesList
+              messages={messages}
+              setMessages={setMessages}
+              isLoading={isLoading}
+            />
+          }
+        />
+        <Route path="/authors/:author" element={<AuthorPage />} />
+      </Routes>
     </div>
   );
 }
