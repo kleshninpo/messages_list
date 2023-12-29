@@ -1,10 +1,11 @@
 import React from 'react';
+import { v4 as uuid } from 'uuid';
 import { IMessage } from '../types';
 import { Message } from './Message';
 import './MessagesList.css';
 import { SearchPanel } from './SearchPanel';
 import { useSearch } from '../hooks/useSearch';
-import { useModal } from '../hooks/useModal';
+import { useFlag } from '../hooks/useFlag';
 import { Modal } from './Modal';
 import { addMessage } from '../api';
 
@@ -22,7 +23,7 @@ export const MessagesList: React.FC<IMessagesListProps> = ({
   const { filteredMessagesList, setInput, input, setFilterType } =
     useSearch(messages);
 
-  const { isVisible, show, hide } = useModal();
+  const { setTrue: show, setFalse: hide, isTrue: isVisible } = useFlag();
   return isLoading ? (
     <div style={{ fontSize: '55px' }}>LOADING...</div>
   ) : (
@@ -35,15 +36,17 @@ export const MessagesList: React.FC<IMessagesListProps> = ({
       {isVisible && (
         <Modal
           cb={(message: IMessage) => {
-            addMessage(message).then(() => setMessages([...messages, message]));
+            addMessage({ ...message, id: uuid() }).then(() =>
+              setMessages([...messages, message]),
+            );
           }}
           handleClose={hide}
         />
       )}
       <button onClick={show}>Add new message</button>
-      {filteredMessagesList.map(({ author, createdAt, text }, i) => {
+      {filteredMessagesList.map(({ author, createdAt, text, id }) => {
         return (
-          <Message key={i} author={author} createdAt={createdAt} text={text} />
+          <Message key={id} author={author} createdAt={createdAt} text={text} />
         );
       })}
     </div>

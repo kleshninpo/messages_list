@@ -3,6 +3,7 @@ import { MessagesList } from './Components/MessagesList';
 import { Route, Routes } from 'react-router-dom';
 import { AuthorPage } from './Components/AuthorPage';
 import { IMessage } from './types';
+import { getMessages } from './api';
 
 function App() {
   const [isLoading, setIsLoading] = useState(false);
@@ -10,19 +11,12 @@ function App() {
 
   useEffect(() => {
     setIsLoading(true);
-    setTimeout(() => {
-      try {
-        fetch('http://localhost:3001/messages')
-          .then((messages) => messages.json())
-          .then((messages) => {
-            setMessages(messages);
-          });
-      } catch (e) {
-        console.error(e);
-      } finally {
-        setIsLoading(false);
-      }
-    }, 500);
+    getMessages()
+      .then((msgs) => {
+        if (msgs) setMessages(msgs);
+      })
+      .catch((e) => console.error(e.message));
+    setIsLoading(false);
   }, []);
 
   return (
@@ -38,7 +32,10 @@ function App() {
             />
           }
         />
-        <Route path="/authors/:author" element={<AuthorPage />} />
+        <Route
+          path="/authors/:author"
+          element={<AuthorPage messages={messages} />}
+        />
       </Routes>
     </div>
   );

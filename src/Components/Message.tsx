@@ -2,7 +2,11 @@ import React from 'react';
 import { IMessage } from '../types';
 import './Message.css';
 import { Link } from 'react-router-dom';
-export const Message: React.FC<IMessage> = ({ createdAt, author, text }) => {
+export const Message: React.FC<Omit<IMessage, 'id'>> = ({
+  createdAt,
+  author,
+  text,
+}) => {
   const date = new Date(createdAt * 1000).toLocaleString('default', {
     dateStyle: 'long',
     timeStyle: 'short',

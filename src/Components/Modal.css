@@ -42,3 +42,30 @@
 .modal textarea {
   height: 150px;
 }
+
+.text_length_counter__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.warning {
+  padding: 5px 10px;
+  background-color: #FFCC00;
+  border-radius: 3px;
+  font-size: 12px;
+}
+
+.overflowed {
+  color: #ff0033
+}
+
+.shaking {
+  animation: tilt-shaking .8s ease-in-out;
+}
+
+@keyframes tilt-shaking {
+  0%, 10%, 20%, 30%, 40%, 50%, 60%, 70%, 80%, 90%, 100% { transform: translateX(0); }
+  5%, 25%, 45%, 65%, 85% { transform: translateX(5px) }
+  15%, 35%, 55%, 75%, 95% { transform: translateX(-5px); }
+}

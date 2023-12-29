@@ -1,45 +1,45 @@
 {
   "authors": [
     {
-      "id": 101,
       "fullName": "George Martin",
-      "birthday": -670808186000
+      "birthday": -670808186000,
+      "id": "0339b989-d1f2-4f96-bcba-8717c68a64b1"
     },
     {
-      "id": 102,
       "fullName": "Stephen King",
-      "birthday": -703123199000
+      "birthday": -703123199000,
+      "id": "0339b989-d1f2-4f96-bcba-8717c68a64b2"
     },
     {
-      "id": 103,
       "fullName": "John Fowles",
-      "birthday": -1375574399000
+      "birthday": -1375574399000,
+      "id": "0339b989-d1f2-4f96-bcba-8717c68a64b3"
     }
   ],
   "messages": [
     {
-      "id": 1,
       "author": "George Martin",
       "createdAt": 1703018055,
-      "text": "Once upon a time I wrote a huge book..."
+      "text": "Once upon a time I wrote a huge book...",
+      "id": "0339b989-d1f2-4f96-bcba-8717c68a64a1"
     },
     {
-      "id": 2,
       "author": "Stephen King",
       "createdAt": 1603018055,
-      "text": "What I'm doing here?"
+      "text": "What I'm doing here?",
+      "id": "0339b989-d1f2-4f96-bcba-8717c68a64a2"
     },
     {
-      "id": 3,
       "author": "Stephen King",
       "createdAt": 1613018055,
-      "text": "Siri how can I open Google?"
+      "text": "Siri how can I open Google?",
+      "id": "0339b989-d1f2-4f96-bcba-8717c68a64a3"
     },
     {
-      "id": 4,
       "author": "John Fowles",
       "createdAt": 1702018055,
-      "text": "About my book 'The Magus'..."
+      "text": "About my book 'The Magus'...",
+      "id": "0339b989-d1f2-4f96-bcba-8717c68a64a4"
     }
   ]
 }

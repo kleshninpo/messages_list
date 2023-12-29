@@ -1,12 +1,11 @@
 import React from 'react';
 import './SearchPanel.css';
-import { EFilterType } from '../types';
-import { keys } from '../utils/keys';
+import { EFilterType, FilterTypes } from '../types';
 
 interface ISearchPanelProps {
   setInput: (value: string) => void;
   input: string;
-  setFilterType: (value: EFilterType) => void;
+  setFilterType: React.Dispatch<React.SetStateAction<EFilterType>>;
 }
 
 export const SearchPanel: React.FC<ISearchPanelProps> = ({
@@ -14,8 +13,6 @@ export const SearchPanel: React.FC<ISearchPanelProps> = ({
   input,
   setFilterType,
 }) => {
-  const options = keys(EFilterType).map((key) => EFilterType[key]);
-
   const renderOption = (value: EFilterType) => {
     return (
       <option value={value} key={value}>
@@ -38,7 +35,7 @@ export const SearchPanel: React.FC<ISearchPanelProps> = ({
       <section>
         <label htmlFor="filter_type">Search by </label>
         <select onChange={onSelect} id="filter_type">
-          {options.map(renderOption)}
+          {FilterTypes.map(renderOption)}
         </select>
       </section>
       <input

@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import './Modal.css';
+import { useClass } from '../hooks/useClass';
 
 interface IModalProps {
   cb: (data?: any) => void;
@@ -9,9 +10,13 @@ interface IModalProps {
 const MAX_TEXT_LENGTH = 200;
 
 export const Modal: React.FC<IModalProps> = ({ cb, handleClose }) => {
-  const [count, setCount] = useState(0);
   const [newText, setNewText] = useState('');
   const [newAuthor, setNewAuthor] = useState('');
+  const warning = useRef<HTMLDivElement>(null);
+  const memoizedCb = useCallback(cb, [cb]);
+
+  const { addClass: addShakingClass, removeClass: removeShakingClass } =
+    useClass({ className: 'shaking', ref: warning });
 
   return (
     <div className="modal_container">
@@ -24,15 +29,28 @@ export const Modal: React.FC<IModalProps> = ({ cb, handleClose }) => {
           onChange={(e) => setNewAuthor(e.target.value)}
         />
 
-        <label htmlFor="new_post__text">
-          Post text: {count} / {MAX_TEXT_LENGTH}
-        </label>
+        <div className="text_length_counter__row">
+          <label htmlFor="new_post__text">
+            Post text:{' '}
+            <span
+              className={newText.length >= MAX_TEXT_LENGTH ? 'overflowed' : ''}>
+              {newText.length}
+            </span>
+            /{MAX_TEXT_LENGTH}
+          </label>
+          {newText.length >= MAX_TEXT_LENGTH && (
+            <div
+              className="warning"
+              onAnimationEnd={removeShakingClass}
+              ref={warning}>
+              Please, shrink your message under 200 symbols
+            </div>
+          )}
+        </div>
         <textarea
           id="new_post__text"
-          maxLength={MAX_TEXT_LENGTH}
           onChange={(e) => {
             setNewText(e.target.value);
-            setCount(e.target.value.length);
           }}
         />
 
@@ -42,7 +60,12 @@ export const Modal: React.FC<IModalProps> = ({ cb, handleClose }) => {
 
         <button
           onClick={() => {
-            cb({
+            if (newText.length >= MAX_TEXT_LENGTH) {
+              addShakingClass();
+              return;
+            }
+
+            memoizedCb({
               text: newText,
               author: newAuthor,
               createdAt: Date.now() / 1000,

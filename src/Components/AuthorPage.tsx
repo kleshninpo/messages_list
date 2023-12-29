@@ -1,43 +1,58 @@
-import React, { useEffect, useState } from 'react';
+import React, { memo, useEffect, useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import './AuthorPage.css';
 import { Message } from './Message';
+import { IAuthor, IMessage } from '../types';
+import { v4 as uuid } from 'uuid';
+import { getAuthor } from '../api';
 
-export const AuthorPage: React.FC = () => {
-  const [authorData, setAuthorData] = useState({ fullName: '', birthday: 0 });
-  const [messages, setMessages] = useState([]);
-  const { author } = useParams();
+export const AuthorPage: React.FC<{ messages: IMessage[] }> = memo(
+  ({ messages }) => {
+    const [authorData, setAuthorData] = useState<IAuthor>({
+      fullName: 'no name found',
+      birthday: 0,
+      id: uuid(),
+    });
+    const { author = '' } = useParams();
 
-  useEffect(() => {
-    try {
-      fetch(`http://localhost:3001/authors?fullName=${author}`)
-        .then((data) => data.json())
-        .then((data) => setAuthorData(data[0]));
-      fetch(`http://localhost:3001/messages?author=${author}`)
-        .then((data) => data.json())
-        .then((data) => setMessages(data));
-    } catch (e) {
-      console.error(e);
-    }
-  }, [author]);
+    const authorMessages = useMemo(() => {
+      return messages.filter((msg) => author === msg.author);
+    }, [author, messages]);
 
-  return (
-    <div className="author_page">
-      <div className="author_name"> name - {authorData?.fullName}</div>
-      <div className="author_birthday">{`birthday - ${new Date(
-        authorData?.birthday,
-      ).toLocaleString('default', {
-        dateStyle: 'long',
-      })}`}</div>
+    useEffect(() => {
+      getAuthor(author).then((data) => {
+        setAuthorData(data[0]);
+      });
+    }, [author]);
 
-      <h2>Messages by {author}:</h2>
-      <div className="messages">
-        {messages.length
-          ? messages.map(({ author, text, createdAt }) => (
-              <Message author={author} text={text} createdAt={createdAt} />
-            ))
-          : 'No messages found'}
+    return (
+      <div className="author_page">
+        <div className="author_name"> name - {authorData?.fullName}</div>
+        <div className="author_birthday">
+          {authorData?.birthday
+            ? `birthday - ${new Date(authorData.birthday).toLocaleString(
+                'default',
+                {
+                  dateStyle: 'long',
+                },
+              )}`
+            : 'Birthday not available'}
+        </div>
+
+        <h2>Messages by {author}:</h2>
+        <div className="messages">
+          {authorMessages.length
+            ? authorMessages.map(({ author, text, createdAt, id }) => (
+                <Message
+                  author={author}
+                  text={text}
+                  createdAt={createdAt}
+                  key={id}
+                />
+              ))
+            : 'No messages found'}
+        </div>
       </div>
-    </div>
-  );
-};
+    );
+  },
+);
