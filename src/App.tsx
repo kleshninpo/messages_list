@@ -1,24 +1,24 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { MessagesList } from './Components/MessagesList';
+import { Navigate, Route, Routes } from 'react-router-dom';
+import { AuthorPage } from './Components/AuthorPage';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Routes>
+        <Route path="/" element={<Navigate to="/messages" />} />
+        <Route path="/messages" element={<MessagesList />} />
+        <Route path="/authors/:author" element={<AuthorPage />} />
+        <Route
+          path="*"
+          element={
+            <div>
+              <h2>404 Page not found</h2>
+            </div>
+          }
+        />
+      </Routes>
     </div>
   );
 }
