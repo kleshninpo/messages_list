@@ -1,40 +1,22 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { MessagesList } from './Components/MessagesList';
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import { AuthorPage } from './Components/AuthorPage';
-import { IMessage } from './types';
-import { getMessages } from './api';
 
 function App() {
-  const [isLoading, setIsLoading] = useState(false);
-  const [messages, setMessages] = useState<IMessage[]>([]);
-
-  useEffect(() => {
-    setIsLoading(true);
-    getMessages()
-      .then((msgs) => {
-        if (msgs) setMessages(msgs);
-      })
-      .catch((e) => console.error(e.message));
-    setIsLoading(false);
-  }, []);
-
   return (
     <div className="App">
       <Routes>
+        <Route path="/" element={<Navigate to="/messages" />} />
+        <Route path="/messages" element={<MessagesList />} />
+        <Route path="/authors/:author" element={<AuthorPage />} />
         <Route
-          path="/"
+          path="*"
           element={
-            <MessagesList
-              messages={messages}
-              setMessages={setMessages}
-              isLoading={isLoading}
-            />
+            <div>
+              <h2>404 Page not found</h2>
+            </div>
           }
-        />
-        <Route
-          path="/authors/:author"
-          element={<AuthorPage messages={messages} />}
         />
       </Routes>
     </div>
